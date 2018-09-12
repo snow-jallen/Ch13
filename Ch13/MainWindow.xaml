@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:Ch13"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Slider x:Name="mySlider" Minimum="50" Maximum="300" 
+                ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Value, StringFormat=n0}" />
+        <Rectangle Height="{Binding ElementName=mySlider, Path=Value}"
+                   Width="250"
+                   Fill="Black" />
+        <TextBlock Text="{Binding ElementName=mySlider,Path=Value,StringFormat=c}" />
+        <TextBox Text="{Binding MyTextValue, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Click="btnClick" Content="Click me" />
+        <TextBlock Text="{Binding MyDateValue,StringFormat=d}" />
+    </StackPanel>
 </Window>
