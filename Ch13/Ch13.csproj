@@ -91,6 +91,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Snippets\propn.snippet" />
+    <None Include="Snippets\propn_implementation.snippet" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
