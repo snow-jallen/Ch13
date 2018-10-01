@@ -28,6 +28,29 @@ namespace Ch13.ViewModel
             set { SetField(ref selectedPerson, value); }
         }
 
+        private bool isScreen1;
+        public bool IsScreen1
+        {
+            get { return isScreen1; }
+            set
+            {
+                isScreen1 = value;
+                OnPropertyChanged(nameof(IsScreen1));
+                OnPropertyChanged(nameof(IsScreen2));
+            }
+        }
+
+        public bool IsScreen2
+        {
+            get { return !isScreen1; }
+            set
+            {
+                isScreen1 = !value;
+                OnPropertyChanged(nameof(IsScreen1));
+                OnPropertyChanged(nameof(IsScreen2));
+            }
+        }
+
 
 
         #region INotifyPropertyChanged Implementation
