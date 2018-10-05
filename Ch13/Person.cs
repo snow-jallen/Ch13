@@ -44,6 +44,21 @@ namespace Ch13
             }
         }
 
+        private DateTime startDate;
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set { SetField(ref startDate, value); }
+        }
+
+        private string mugshotPath;
+        public string MugshotPath
+        {
+            get { return mugshotPath; }
+            set { SetField(ref mugshotPath, value); }
+        }
+
+
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

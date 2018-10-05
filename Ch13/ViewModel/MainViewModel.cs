@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Ch13.ViewModel
 {
@@ -11,12 +13,13 @@ namespace Ch13.ViewModel
         {
             People = new BindingList<Person>(new[]
             {
-                new Person{FirstName="Jim",LastName="Bob", Salary=123.45M},
-                new Person{FirstName="Joe",LastName="Bob", Salary=223.45M},
-                new Person{FirstName="Jack",LastName="Bob", Salary=323.45M},
-                new Person{FirstName="Jill",LastName="Bob", Salary=423.45M},
+                new Person{FirstName="Jim",LastName="Bob", Salary=123.45M, StartDate= new DateTime(2013, 1,02), MugshotPath="/Images/baby1.png"},
+                new Person{FirstName="Joe",LastName="Bob", Salary=223.45M, StartDate= new DateTime(2014, 2,12), MugshotPath="/Images/baby2.jpg"},
+                new Person{FirstName="Jack",LastName="Bob", Salary=323.45M, StartDate=new DateTime(2015, 3,22), MugshotPath="/Images/baby1.png"},
+                new Person{FirstName="Jill",LastName="Bob", Salary=423.45M, StartDate=new DateTime(2016, 4,03), MugshotPath="/Images/baby2.jpg"},
             }.ToList());
-
+            AddPerson = new AddPersonCommand(People);
+            SelectedPerson = People.First();
         }
 
         public BindingList<Person> People { get; set; }
@@ -51,7 +54,7 @@ namespace Ch13.ViewModel
             }
         }
 
-
+        public ICommand AddPerson { get; set; }
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;

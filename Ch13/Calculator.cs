@@ -15,9 +15,11 @@ namespace Ch13
         public Calculator()
         {
             numbers = new Queue<int>();
+            EnterNumber(8, num3: 3, num2: 12, blowUp: false);
         }
 
-        public void EnterNumber(int number)
+        //[Obsolete("Don't use this, do x instead", error: false)]
+        public void EnterNumber(int number, int num2=0, int num3=4, bool blowUp=true)
         {
             numbers.Enqueue(number);
         }
