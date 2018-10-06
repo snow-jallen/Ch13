@@ -1,5 +1,7 @@
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,50 +13,22 @@ namespace Ch13.ViewModel
     {
         public MainViewModel()
         {
-            People = new BindingList<Person>(new[]
-            {
-                new Person{FirstName="Jim",LastName="Bob", Salary=123.45M, StartDate= new DateTime(2013, 1,02), MugshotPath="/Images/baby1.png"},
-                new Person{FirstName="Joe",LastName="Bob", Salary=223.45M, StartDate= new DateTime(2014, 2,12), MugshotPath="/Images/baby2.jpg"},
-                new Person{FirstName="Jack",LastName="Bob", Salary=323.45M, StartDate=new DateTime(2015, 3,22), MugshotPath="/Images/baby1.png"},
-                new Person{FirstName="Jill",LastName="Bob", Salary=423.45M, StartDate=new DateTime(2016, 4,03), MugshotPath="/Images/baby2.jpg"},
-            }.ToList());
-            AddPerson = new AddPersonCommand(People);
-            SelectedPerson = People.First();
+            ChildViewModels = new ObservableCollection<ChildControl>();
         }
 
-        public BindingList<Person> People { get; set; }
-
-        private Person selectedPerson;
-        public Person SelectedPerson
+        private ObservableCollection<ChildControl> childViewModels;
+        public ObservableCollection<ChildControl> ChildViewModels
         {
-            get { return selectedPerson; }
-            set { SetField(ref selectedPerson, value); }
+            get { return childViewModels; }
+            set { SetField(ref childViewModels, value); }
         }
 
-        private bool isScreen1;
-        public bool IsScreen1
-        {
-            get { return isScreen1; }
-            set
+        private RelayCommand addEmployeeManagement;
+        public RelayCommand AddEmployeeManagement => addEmployeeManagement ?? (addEmployeeManagement = new RelayCommand(
+            () =>
             {
-                isScreen1 = value;
-                OnPropertyChanged(nameof(IsScreen1));
-                OnPropertyChanged(nameof(IsScreen2));
-            }
-        }
-
-        public bool IsScreen2
-        {
-            get { return !isScreen1; }
-            set
-            {
-                isScreen1 = !value;
-                OnPropertyChanged(nameof(IsScreen1));
-                OnPropertyChanged(nameof(IsScreen2));
-            }
-        }
-
-        public ICommand AddPerson { get; set; }
+                ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()));
+            }));
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch13", "Ch13\Ch13.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch13Tests", "Ch13Tests\Ch13Tests.csproj", "{F4BAE4E1-78D3-4E6C-8933-72668A3D4BD6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{18ADAF6F-5D7C-44FC-867C-ABD7A2871467}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F4BAE4E1-78D3-4E6C-8933-72668A3D4BD6} = {18ADAF6F-5D7C-44FC-867C-ABD7A2871467}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82E988F1-D227-451A-8AE0-29634FB7CE99}

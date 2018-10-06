@@ -15,9 +15,6 @@ namespace Ch13Tests
         [Test]
         public void TestOppositeBools()
         {
-            var vm = new MainViewModel();
-            vm.IsScreen1 = true;
-            Assert.IsFalse(vm.IsScreen2);
         }
 
         public void NotATest()
