@@ -27,6 +27,9 @@
                     <RibbonButton Label="Add Tree View"
                                   LargeImageSource="/Resources/addLarge.bmp"
                                   Command="{Binding AddTreeView}" />
+                    <RibbonButton Label="Add DataGrid"
+                                  LargeImageSource="/Resources/addLarge.bmp"
+                                  Command="{Binding AddDataGrid}" />
                 </RibbonGroup>
             </RibbonTab>            
         </Ribbon>
@@ -42,7 +45,8 @@
             </StatusBarItem>
         </StatusBar>
 
-        <TabControl ItemsSource="{Binding ChildViewModels}">            
+        <TabControl ItemsSource="{Binding ChildViewModels}"
+                    SelectedItem="{Binding SelectedChildViewModel}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Header}" />
@@ -57,6 +61,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:TreeViewViewModel}">
                                 <view:TreeViewView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:DataGridViewModel}">
+                                <view:DataGridView />
                             </DataTemplate>
                         </ContentControl.Resources>
                     </ContentControl>

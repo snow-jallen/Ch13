@@ -23,10 +23,20 @@ namespace Ch13.ViewModel
             set { SetField(ref childViewModels, value); }
         }
 
+        private ChildControl selectedChildViewModel;
+        public ChildControl SelectedChildViewModel
+        {
+            get { return selectedChildViewModel; }
+            set { SetField(ref selectedChildViewModel, value); }
+        }
+
         private RelayCommand addEmployeeManagement;
         public RelayCommand AddEmployeeManagement => addEmployeeManagement ?? (addEmployeeManagement = new RelayCommand(
-            () =>ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()))
-            ));
+            () =>
+            {
+                ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()));
+                SelectedChildViewModel = ChildViewModels.Last();
+            }));
 
         private RelayCommand addTreeView;
         public RelayCommand AddTreeView => addTreeView ?? (addTreeView = new RelayCommand(
@@ -35,7 +45,16 @@ namespace Ch13.ViewModel
                 var mostRecentEmployeeManagementViewModel = (EmployeeManagementViewModel)(ChildViewModels.FirstOrDefault(v => v.ViewModel.GetType() == typeof(EmployeeManagementViewModel))?.ViewModel);
                 var people = mostRecentEmployeeManagementViewModel?.People ?? new BindingList<Person>(new[] { new Person() { FirstName = "Bogus", LastName = "Person" } });
                     
-                childViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people))));
+                ChildViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people))));
+                SelectedChildViewModel = ChildViewModels.Last();
+            }));
+
+        private RelayCommand addDataGrid;
+        public RelayCommand AddDataGrid => addDataGrid ?? (addDataGrid = new RelayCommand(
+            () =>
+            {
+                ChildViewModels.Add(new ChildControl("Data Grid", new DataGridViewModel()));
+                SelectedChildViewModel = ChildViewModels.Last();
             }));
 
         #region INotifyPropertyChanged Implementation
@@ -54,7 +73,5 @@ namespace Ch13.ViewModel
             return true;
         }
         #endregion
-
-
     }
 }

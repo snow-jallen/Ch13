@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Ch13.Views.DataGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ch13.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <TextBlock Text="Dock Panel"
+                   DockPanel.Dock="Top" />
+        <DataGrid ItemsSource="{Binding Menu}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Price"
+                                    Binding="{Binding Price, StringFormat=c}" />
+                <DataGridTextColumn Header="Description"
+                                    Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Calories"
+                                    Binding="{Binding Calories}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
