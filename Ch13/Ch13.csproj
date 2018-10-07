@@ -76,11 +76,15 @@
     <Compile Include="Person.cs" />
     <Compile Include="AddPersonCommand.cs" />
     <Compile Include="ViewModel\ChildControl.cs" />
+    <Compile Include="ViewModel\TreeViewViewModel.cs" />
     <Compile Include="ViewModel\EmployeeManagementViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\EmployeeManagementView.xaml.cs">
       <DependentUpon>EmployeeManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeViewView.xaml.cs">
+      <DependentUpon>TreeViewView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +99,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\EmployeeManagementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeViewView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

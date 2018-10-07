@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Ch13.Views.TreeViewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ch13.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Add Single Person"
+                    Command="{Binding AddSinglePerson}" />
+        </ToolBar>
+        <TextBlock DockPanel.Dock="Top" Text="This is a tree view" />
+        <TreeView ItemsSource="{Binding People}"
+                  SelectedItemChanged="selectedItemChanged">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </DockPanel>
+</UserControl>

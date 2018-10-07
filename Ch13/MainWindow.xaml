@@ -24,6 +24,9 @@
                     <RibbonButton Label="Add Employee Management"
                                   LargeImageSource="/Resources/addLarge.bmp"
                                   Command="{Binding AddEmployeeManagement}" />
+                    <RibbonButton Label="Add Tree View"
+                                  LargeImageSource="/Resources/addLarge.bmp"
+                                  Command="{Binding AddTreeView}" />
                 </RibbonGroup>
             </RibbonTab>            
         </Ribbon>
@@ -51,6 +54,9 @@
                         <ContentControl.Resources>
                             <DataTemplate DataType="{x:Type vm:EmployeeManagementViewModel}">
                                 <view:EmployeeManagementView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:TreeViewViewModel}">
+                                <view:TreeViewView />
                             </DataTemplate>
                         </ContentControl.Resources>
                     </ContentControl>

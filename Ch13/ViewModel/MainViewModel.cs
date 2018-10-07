@@ -25,9 +25,17 @@ namespace Ch13.ViewModel
 
         private RelayCommand addEmployeeManagement;
         public RelayCommand AddEmployeeManagement => addEmployeeManagement ?? (addEmployeeManagement = new RelayCommand(
+            () =>ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()))
+            ));
+
+        private RelayCommand addTreeView;
+        public RelayCommand AddTreeView => addTreeView ?? (addTreeView = new RelayCommand(
             () =>
             {
-                ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()));
+                var mostRecentEmployeeManagementViewModel = (EmployeeManagementViewModel)(ChildViewModels.FirstOrDefault(v => v.ViewModel.GetType() == typeof(EmployeeManagementViewModel))?.ViewModel);
+                var people = mostRecentEmployeeManagementViewModel?.People ?? new BindingList<Person>(new[] { new Person() { FirstName = "Bogus", LastName = "Person" } });
+                    
+                childViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people))));
             }));
 
         #region INotifyPropertyChanged Implementation

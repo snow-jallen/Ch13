@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,12 @@ namespace Ch13
 {
     public class Person : INotifyPropertyChanged
     {
+        public Person(string firstName=null, string lastName=null)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Children.CollectionChanged += (s, e) => OnPropertyChanged(nameof(Children));
+        }
         public string Name
         {
             get { return $"{FirstName} {LastName}"; }
@@ -57,6 +64,9 @@ namespace Ch13
             get { return mugshotPath; }
             set { SetField(ref mugshotPath, value); }
         }
+
+        private ObservableCollection<Person> children;
+        public ObservableCollection<Person> Children => children ?? (children = new ObservableCollection<Person>());
 
 
         #region INotifyPropertyChanged Implementation
