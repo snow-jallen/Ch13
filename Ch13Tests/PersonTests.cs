@@ -47,5 +47,22 @@ namespace Ch13Tests
             Assert.AreEqual(vm[nameof(vm.DoesWorkFromHome)], "Work from home is only available for full-time employees.");
         }
 
+        [Test]
+        public void CannotSaveChangesIfErrorExists()
+        {
+            var vm = new Person();
+            vm.IsPartTime = true;
+            vm.DoesWorkFromHome = true;
+            Assert.IsFalse(vm.SaveChanges.CanExecute(this));
+        }
+
+        [Test]
+        public void CanSaveChangesIfErrorDoesNotExist()
+        {
+            var vm = new Person();
+            vm.IsFullTime = true;
+            vm.DoesWorkFromHome = true;
+            Assert.IsTrue(vm.SaveChanges.CanExecute(this));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Ch13
         public MainWindow()
         {
             InitializeComponent();
+            Messenger.Default.Register<string>(this, (s) => MessageBox.Show(s));
         }
     }
 }

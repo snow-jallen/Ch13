@@ -1,4 +1,6 @@
 ﻿using Ch13.ViewModel;
+using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -147,6 +149,14 @@ namespace Ch13
                 validateWorkFromHome();
             }
         }
+
+        private RelayCommand saveChanges;
+        public RelayCommand SaveChanges => saveChanges ?? (saveChanges = new RelayCommand(
+            () =>
+            {
+                Messenger.Default.Send("You saved it!");
+            },
+            () => errors.Count == 0 || errors.Values.Count(v => !String.IsNullOrWhiteSpace(v)) == 0));
 
         private Dictionary<string, string> errors = new Dictionary<string, string>();
         public string Error => throw new NotImplementedException();

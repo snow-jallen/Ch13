@@ -161,6 +161,11 @@
 
                 </Expander>
             </StackPanel>
+            <Button Content="Save Changes"
+                    Command="{Binding SaveChanges}"
+                    Grid.Row="7" Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    Padding="5"/>
         </Grid>
     </Grid>
 </UserControl>
