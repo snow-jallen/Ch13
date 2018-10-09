@@ -9,6 +9,8 @@ using System.Windows.Input;
 
 namespace Ch13.ViewModel
 {
+    public enum ScheduleType { FullTime,PartTime,AsNeeded}
+
     public class EmployeeManagementViewModel : INotifyPropertyChanged
     {
         public EmployeeManagementViewModel()
@@ -34,7 +36,6 @@ namespace Ch13.ViewModel
         }
 
         public ICommand AddPerson { get; set; }
-
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;

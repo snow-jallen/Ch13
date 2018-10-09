@@ -15,7 +15,6 @@ namespace Ch13
         public Calculator()
         {
             numbers = new Queue<int>();
-            EnterNumber(8, num3: 3, num2: 12, blowUp: false);
         }
 
         //[Obsolete("Don't use this, do x instead", error: false)]

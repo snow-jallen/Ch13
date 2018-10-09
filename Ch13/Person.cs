@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ch13.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ch13
 {
-    public class Person : INotifyPropertyChanged
+    public class Person : INotifyPropertyChanged, IDataErrorInfo
     {
         public Person(string firstName=null, string lastName=null)
         {
@@ -68,6 +69,88 @@ namespace Ch13
         private ObservableCollection<Person> children;
         public ObservableCollection<Person> Children => children ?? (children = new ObservableCollection<Person>());
 
+        private ScheduleType schedule;
+        public ScheduleType Schedule
+        {
+            get { return schedule; }
+            set
+            {
+                SetField(ref schedule, value);
+                validateWorkFromHome();
+            }
+        }
+
+        private void validateWorkFromHome()
+        {
+            if (DoesWorkFromHome && !IsFullTime)
+                errors[nameof(DoesWorkFromHome)] = "Work from home is only available for full-time employees.";
+            else
+                errors[nameof(DoesWorkFromHome)] = null;
+
+            OnPropertyChanged(nameof(CanWorkFromHome));
+            OnPropertyChanged(nameof(DoesWorkFromHome));
+            OnPropertyChanged(nameof(IsFullTime));
+            OnPropertyChanged(nameof(IsPartTime));
+            OnPropertyChanged(nameof(IsAsNeeded));
+        }
+
+        private bool doesWorkFromHome;
+        public bool DoesWorkFromHome
+        {
+            get { return doesWorkFromHome; }
+            set
+            {
+                SetField(ref doesWorkFromHome, value);
+                validateWorkFromHome();
+            }
+        }
+
+        public bool CanWorkFromHome => Schedule == ScheduleType.FullTime;
+        public bool IsFullTime
+        {
+            get
+            {
+                return Schedule == ScheduleType.FullTime;
+            }
+            set
+            {
+                if (value)
+                    Schedule = ScheduleType.FullTime;
+                validateWorkFromHome();
+            }
+        }
+
+        public bool IsPartTime
+        {
+            get
+            {
+                return Schedule == ScheduleType.PartTime;
+            }
+            set
+            {
+                if (value)
+                    Schedule = ScheduleType.PartTime;
+                validateWorkFromHome();
+            }
+        }
+
+        public bool IsAsNeeded
+        {
+            get
+            {
+                return Schedule == ScheduleType.AsNeeded;
+            }
+            set
+            {
+                if (value)
+                    Schedule = ScheduleType.AsNeeded;
+                validateWorkFromHome();
+            }
+        }
+
+        private Dictionary<string, string> errors = new Dictionary<string, string>();
+        public string Error => throw new NotImplementedException();
+        public string this[string columnName] => errors.ContainsKey(columnName) ? errors[columnName] : null;
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
