@@ -76,21 +76,23 @@
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
                        Text="Selected Employee Details" />
-            <TextBlock Grid.Row="1"
-                       Margin="5"
-                       Text="First Name" />
+            <Label Grid.Row="1"
+                   Target="txtFirstName"
+                   Content="_First Name" />
             <TextBox Grid.Row="1"
                      Grid.Column="1"
                      Grid.ColumnSpan="2"
                      Margin="5"
+                     x:Name="txtFirstName"
                      Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, FallbackValue='Select a person on the left...'}" />
-            <TextBlock Grid.Row="2"
-                       Margin="5"
-                       Text="Last Name" />
+            <Label Grid.Row="2"
+                   Content="_Last Name"
+                   Target="txtLastName" />
             <TextBox Grid.Row="2"
                      Grid.Column="1"
                      Grid.ColumnSpan="2"
                      Margin="5"
+                     x:Name="txtLastName"
                      Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, FallbackValue='Select a person on the left...'}" />
             <TextBlock Grid.Row="3"
                        Margin="5"

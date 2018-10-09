@@ -23,6 +23,8 @@
                 <RibbonGroup Header="Actions">
                     <RibbonButton Label="Add Employee Management"
                                   LargeImageSource="/Resources/addLarge.bmp"
+                                  ToolTipTitle="Add Employee Management Screen"
+                                  ToolTipDescription="Add a new tab with controls to manage a set of employees, including their schedule (full time, part time, etc.), and other things."
                                   Command="{Binding AddEmployeeManagement}" />
                     <RibbonButton Label="Add Tree View"
                                   LargeImageSource="/Resources/addLarge.bmp"
@@ -31,9 +33,9 @@
                                   LargeImageSource="/Resources/addLarge.bmp"
                                   Command="{Binding AddDataGrid}" />
                 </RibbonGroup>
-            </RibbonTab>            
+            </RibbonTab>
         </Ribbon>
-        
+
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="Status Bar Item" />
             <Separator />

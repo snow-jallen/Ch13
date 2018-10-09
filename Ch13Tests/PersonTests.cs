@@ -1,4 +1,5 @@
-﻿using Ch13.ViewModel;
+﻿using Ch13;
+using Ch13.ViewModel;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,12 @@ using System.Threading.Tasks;
 namespace Ch13Tests
 {
     [TestFixture]
-    public class EmployeeTests
+    public class PersonTests
     {
         [Test]
         public void CannotWorkFromHomeIfPartTime()
         {
-            var vm = new EmployeeManagementViewModel();
+            var vm = new Person();
             vm.Schedule = ScheduleType.PartTime;
             Assert.IsFalse(vm.CanWorkFromHome);
         }
@@ -22,7 +23,7 @@ namespace Ch13Tests
         [Test]
         public void IfFullTimeTrueThenOthersFalse()
         {
-            var vm = new EmployeeManagementViewModel();
+            var vm = new Person();
             vm.IsFullTime = true;
             Assert.IsFalse(vm.IsPartTime);
             Assert.IsFalse(vm.IsAsNeeded);
@@ -31,7 +32,7 @@ namespace Ch13Tests
         [Test]
         public void IfPartTimeTrueThenOthersFalse()
         {
-            var vm = new EmployeeManagementViewModel();
+            var vm = new Person();
             vm.IsPartTime = true;
             Assert.IsFalse(vm.IsFullTime);
             Assert.IsFalse(vm.IsAsNeeded);
@@ -40,15 +41,11 @@ namespace Ch13Tests
         [Test]
         public void ErrorMessageWhenWorkingFromHomeAndPartTime()
         {
-            var vm = new EmployeeManagementViewModel();
+            var vm = new Person();
             vm.IsPartTime = true;
             vm.DoesWorkFromHome = true;
-            Assert.AreEqual(vm[nameof(DoesWorkFromHome)], "Work from home is only available for full-time employees.");
+            Assert.AreEqual(vm[nameof(vm.DoesWorkFromHome)], "Work from home is only available for full-time employees.");
         }
 
-        private object DoesWorkFromHome()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
