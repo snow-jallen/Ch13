@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskDialogInterop;
 
 namespace Ch13
 {
@@ -24,7 +25,18 @@ namespace Ch13
         public MainWindow()
         {
             InitializeComponent();
-            Messenger.Default.Register<string>(this, (s) => MessageBox.Show(s));
+            Messenger.Default.Register<string>(this, (s) =>
+            {
+                var options = new TaskDialogOptions
+                {
+                    CommandButtons = new[] { "Button 1", "Button 2", "Button 3" },
+                    Title = "This is a TaskDialog",
+                    MainInstruction = s,
+                    Content="This is extra content that can go along with the message."
+                };
+                var result = TaskDialog.Show(options);
+                MessageBox.Show($"You clicked on \n* Command Button {result.CommandButtonResult ?? -1}\n* Radio Button {result.RadioButtonResult ?? -1}\n* Custom Button {result.CustomButtonResult ?? -1}\n* Result: {result.Result}");
+            });
         }
     }
 }

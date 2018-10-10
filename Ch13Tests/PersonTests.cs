@@ -64,5 +64,6 @@ namespace Ch13Tests
             vm.DoesWorkFromHome = true;
             Assert.IsTrue(vm.SaveChanges.CanExecute(this));
         }
+
     }
 }
