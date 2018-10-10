@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TaskDialogInterop;
 
 namespace Ch13
 {
@@ -155,6 +156,11 @@ namespace Ch13
             () =>
             {
                 Messenger.Default.Send("You saved it!");
+
+
+                var options = new TaskDialogOptions();
+                options.MainInstruction = "You clicked save!";
+                Messenger.Default.Send<TaskDialogOptions>(options);
             },
             () => errors.Count == 0 || errors.Values.Count(v => !String.IsNullOrWhiteSpace(v)) == 0));
 

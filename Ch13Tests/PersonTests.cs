@@ -1,11 +1,13 @@
 ﻿using Ch13;
 using Ch13.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskDialogInterop;
 
 namespace Ch13Tests
 {
@@ -65,5 +67,21 @@ namespace Ch13Tests
             Assert.IsTrue(vm.SaveChanges.CanExecute(this));
         }
 
+        [Test]
+        public void TestTaskDialog()
+        {
+            var taskDialogMessageReceived = false;
+
+            Messenger.Default.Register<TaskDialogOptions>(this, (o) =>
+            {
+                Assert.AreEqual(o.MainInstruction, "You clicked save!");
+                taskDialogMessageReceived = true;
+            });
+
+            var vm = new Person();
+            vm.IsFullTime = true;
+            vm.SaveChanges.Execute(this);
+            Assert.IsTrue(taskDialogMessageReceived);
+        }
     }
 }
