@@ -39,6 +39,8 @@ namespace Ch13
             get { return firstName; }
             set
             {
+                if (value?.Length > 10)
+                    throw new ArgumentOutOfRangeException(nameof(FirstName), value, "Cannot be > 10 characters.");
                 SetField(ref firstName, value);
                 OnPropertyChanged(nameof(Name));
             }

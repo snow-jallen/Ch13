@@ -83,5 +83,20 @@ namespace Ch13Tests
             vm.SaveChanges.Execute(this);
             Assert.IsTrue(taskDialogMessageReceived);
         }
+
+        [Test]
+        public void FirstNameThrowsExceptionIfLongerThan10Chars()
+        {
+            var vm = new Person();
+            try
+            {
+                vm.FirstName = "12345678901";//11 characters
+                Assert.Fail("FirstName should throw an exception if > 10 characters");
+            }
+            catch(Exception ex)
+            {
+                Assert.IsNotNull(ex, "FirstName should throw an exception if > 10 characters");
+            }
+        }
     }
 }
