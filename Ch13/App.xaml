@@ -11,25 +11,6 @@
             <vm:ViewModelLocator x:Key="Locator"
                                  d:IsDataSource="True"
                                  xmlns:vm="clr-namespace:Ch13.ViewModel" />
-            <Style x:Key="header"
-                   TargetType="TextBlock">
-                <Setter Property="FontSize"
-                        Value="18pt" />
-                <Setter Property="FontWeight"
-                        Value="Bold" />
-                <Setter Property="Margin"
-                        Value="5" />
-            </Style>
-            <Style x:Key="commonEntryField"
-                   TargetType="TextBox">
-                <Setter Property="Margin"
-                        Value="5" />
-            </Style>
-            <Style x:Key="commonEntryLabel"
-                   TargetType="TextBlock">
-                <Setter Property="Margin"
-                        Value="5" />
-            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
