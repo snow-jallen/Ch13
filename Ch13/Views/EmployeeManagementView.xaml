@@ -12,6 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles.xaml" />
                 <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="BoolToVis" />
                     <Style TargetType="CheckBox">
                         <Style.Triggers>
                             <Trigger Property="Validation.HasError"
@@ -154,7 +155,12 @@
                     <StackPanel>
                         <CheckBox Content="Works from home"
                                   Margin="5"
-                                  IsChecked="{Binding DoesWorkFromHome, ValidatesOnDataErrors=True}" />
+                                  IsChecked="{Binding DoesWorkFromHome, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Is Checked!"
+                                   Visibility="{Binding DoesWorkFromHome, Converter={StaticResource BoolToVis}, UpdateSourceTrigger=PropertyChanged}"
+                                   FontSize="22pt"
+                                   Foreground="Red"
+                                   FontWeight="Bold" />
                         <GroupBox Header="Schedule">
                             <StackPanel>
                                 <RadioButton Content="Full Time" IsChecked="{Binding IsFullTime}" />
