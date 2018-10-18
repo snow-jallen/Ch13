@@ -27,10 +27,10 @@ namespace Ch13.ViewModel
             get { return selectedPerson; }
             set { SetField(ref selectedPerson, value); }
         }
-
+        int childNumber = 1;
         private RelayCommand addSinglePerson;
         public RelayCommand AddSinglePerson => addSinglePerson ?? (addSinglePerson = new RelayCommand(
-            () => SelectedPerson.Children.Add(new Person() { FirstName = $"Added {DateTime.Now}" })));
+            () => SelectedPerson.Children.Add(new Person() { FirstName = $"Child {childNumber++}" })));
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
