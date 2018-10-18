@@ -1,6 +1,9 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -36,6 +39,49 @@ namespace Ch13.ViewModel
         }
 
         public ICommand AddPerson { get; set; }
+
+        private string fileName;
+        public string FileName
+        {
+            get { return fileName; }
+            set
+            {
+                SetField(ref fileName, value);
+                SaveEmployeeList.RaiseCanExecuteChanged();
+                LoadEmployeeList.RaiseCanExecuteChanged();
+            }
+        }
+
+        private RelayCommand saveEmployeeList;
+        public RelayCommand SaveEmployeeList => saveEmployeeList ?? (saveEmployeeList = new RelayCommand(
+            () =>
+            {
+                var json = JsonConvert.SerializeObject(People, Formatting.Indented);
+
+                //For a _real_ MVVM implementation you wouldn't write straight to the filesystem here
+                //you'd have something like a IStorageService with Save() and Read() methods.
+                //That way you can swap in a different implementation of IStorageService when you're testing
+                //that doesn't actually hit the file system.
+                //But...for now, we'll just write straight to disk.
+                File.WriteAllText(FileName, json);
+            },
+            ()=>
+            {
+                var folder = Path.GetDirectoryName(FileName);
+                return Directory.Exists(folder);
+            }));
+
+        private RelayCommand loadEmployeeList;
+        public RelayCommand LoadEmployeeList => loadEmployeeList ?? (loadEmployeeList = new RelayCommand(
+            () =>
+            {
+                var json = File.ReadAllText(FileName);
+                var peopleFromJson = JsonConvert.DeserializeObject<IEnumerable<Person>>(json);
+                People = new BindingList<Person>(peopleFromJson.ToList());
+                OnPropertyChanged(nameof(People));
+                SelectedPerson = People.First();
+            },
+            () => File.Exists(FileName)));
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;

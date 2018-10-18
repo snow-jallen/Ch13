@@ -53,6 +53,18 @@
                     Margin="5"
                     Padding="5"
                     Command="{Binding AddPerson}" />
+            <TextBlock Text="File Name"
+                       Margin="5" />
+            <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="5" />
+            <Button Content="Save Employees"
+                    Margin="5"
+                    Padding="5"
+                    Command="{Binding SaveEmployeeList}" />
+            <Button Content="Load Employees"
+                    Margin="5"
+                    Padding="5"
+                    Command="{Binding LoadEmployeeList}" />
         </StackPanel>
 
         <Grid DataContext="{Binding SelectedPerson}"

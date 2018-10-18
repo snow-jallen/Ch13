@@ -15,12 +15,18 @@ namespace Ch13
 {
     public class Person : INotifyPropertyChanged, IDataErrorInfo
     {
+        public Person() : this(firstName: null, lastName: null)
+        {
+
+        }
+
         public Person(string firstName=null, string lastName=null)
         {
             FirstName = firstName;
             LastName = lastName;
             Children.CollectionChanged += (s, e) => OnPropertyChanged(nameof(Children));
         }
+
         public string Name
         {
             get { return $"{FirstName} {LastName}"; }
@@ -167,7 +173,7 @@ namespace Ch13
             () => errors.Count == 0 || errors.Values.Count(v => !String.IsNullOrWhiteSpace(v)) == 0));
 
         private Dictionary<string, string> errors = new Dictionary<string, string>();
-        public string Error => throw new NotImplementedException();
+        public string Error => null;
         public string this[string columnName] => errors.ContainsKey(columnName) ? errors[columnName] : null;
 
         #region INotifyPropertyChanged Implementation
