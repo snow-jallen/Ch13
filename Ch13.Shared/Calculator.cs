@@ -1,37 +1,41 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace Ch13.ViewModel
+namespace Ch13.Shared
 {
-    public class TreeViewViewModel : INotifyPropertyChanged
+    public class Calculator : INotifyPropertyChanged
     {
-        public TreeViewViewModel(ObservableCollection<Person> people)
+        private Queue<int> numbers;
+
+        public Calculator()
         {
-            People = people;
-            SelectedPerson = People?.FirstOrDefault();
+            numbers = new Queue<int>();
         }
 
-        public ObservableCollection<Person> People { get; }
-
-        private Person selectedPerson;
-        public Person SelectedPerson
+        //[Obsolete("Don't use this, do x instead", error: false)]
+        public void EnterNumber(int number, int num2=0, int num3=4, bool blowUp=true)
         {
-            get { return selectedPerson; }
-            set { SetField(ref selectedPerson, value); }
+            numbers.Enqueue(number);
         }
-        int childNumber = 1;
-        private RelayCommand addSinglePerson;
-        public RelayCommand AddSinglePerson => addSinglePerson ?? (addSinglePerson = new RelayCommand(
-            () => SelectedPerson.Children.Add(new Person() { FirstName = $"Child {childNumber++}" })));
 
+        public void Add()
+        {
+            Result = numbers.Sum();
+            numbers.Clear();
+        }
+
+        private int result;
+        public int Result
+        {
+            get { return result; }
+            set { SetField(ref result, value); }
+        }
+               
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -48,5 +52,6 @@ namespace Ch13.ViewModel
             return true;
         }
         #endregion
+
     }
 }

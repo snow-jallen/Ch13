@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ch13
+namespace Ch13.Shared
 {
     public class MenuItem
     {

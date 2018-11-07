@@ -1,4 +1,6 @@
 ﻿using Ch13;
+using Ch13.Shared;
+using Ch13.Shared.ViewModel;
 using Ch13.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
@@ -14,10 +16,12 @@ namespace Ch13Tests
     [TestFixture]
     public class PersonTests
     {
+        IPlatformServices platformServices = new TestPlatformServices();
+
         [Test]
         public void CannotWorkFromHomeIfPartTime()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.Schedule = ScheduleType.PartTime;
             Assert.IsFalse(vm.CanWorkFromHome);
         }
@@ -25,7 +29,7 @@ namespace Ch13Tests
         [Test]
         public void IfFullTimeTrueThenOthersFalse()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsFullTime = true;
             Assert.IsFalse(vm.IsPartTime);
             Assert.IsFalse(vm.IsAsNeeded);
@@ -34,7 +38,7 @@ namespace Ch13Tests
         [Test]
         public void IfPartTimeTrueThenOthersFalse()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsPartTime = true;
             Assert.IsFalse(vm.IsFullTime);
             Assert.IsFalse(vm.IsAsNeeded);
@@ -43,7 +47,7 @@ namespace Ch13Tests
         [Test]
         public void ErrorMessageWhenWorkingFromHomeAndPartTime()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsPartTime = true;
             vm.DoesWorkFromHome = true;
             Assert.AreEqual(vm[nameof(vm.DoesWorkFromHome)], "Work from home is only available for full-time employees.");
@@ -52,7 +56,7 @@ namespace Ch13Tests
         [Test]
         public void CannotSaveChangesIfErrorExists()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsPartTime = true;
             vm.DoesWorkFromHome = true;
             Assert.IsFalse(vm.SaveChanges.CanExecute(this));
@@ -61,7 +65,7 @@ namespace Ch13Tests
         [Test]
         public void CanSaveChangesIfErrorDoesNotExist()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsFullTime = true;
             vm.DoesWorkFromHome = true;
             Assert.IsTrue(vm.SaveChanges.CanExecute(this));
@@ -72,13 +76,13 @@ namespace Ch13Tests
         {
             var taskDialogMessageReceived = false;
 
-            Messenger.Default.Register<TaskDialogOptions>(this, (o) =>
+            Messenger.Default.Register<TaskDialogInterop.TaskDialogOptions>(this, (o) =>
             {
                 Assert.AreEqual(o.MainInstruction, "You clicked save!");
                 taskDialogMessageReceived = true;
             });
 
-            var vm = new Person();
+            var vm = new Person(platformServices);
             vm.IsFullTime = true;
             vm.SaveChanges.Execute(this);
             Assert.IsTrue(taskDialogMessageReceived);
@@ -87,7 +91,7 @@ namespace Ch13Tests
         [Test]
         public void FirstNameThrowsExceptionIfLongerThan10Chars()
         {
-            var vm = new Person();
+            var vm = new Person(platformServices);
             try
             {
                 vm.FirstName = "12345678901";//11 characters

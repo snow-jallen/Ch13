@@ -5,14 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ch13"
         xmlns:vm="clr-namespace:Ch13.ViewModel"
+        xmlns:sharedvm="clr-namespace:Ch13.Shared.ViewModel;assembly=Ch13.Shared"
         xmlns:view="clr-namespace:Ch13.Views"
         mc:Ignorable="d"
         Title="Sample WPF Application"
         Height="700"
         Width="800">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
     <DockPanel>
         <Ribbon Title="My Ribbon"
                 DockPanel.Dock="Top">
@@ -58,13 +56,13 @@
                 <DataTemplate>
                     <ContentControl Content="{Binding ViewModel}">
                         <ContentControl.Resources>
-                            <DataTemplate DataType="{x:Type vm:EmployeeManagementViewModel}">
+                            <DataTemplate DataType="{x:Type sharedvm:EmployeeManagementViewModel}">
                                 <view:EmployeeManagementView />
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type vm:TreeViewViewModel}">
+                            <DataTemplate DataType="{x:Type sharedvm:TreeViewViewModel}">
                                 <view:TreeViewView />
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type vm:DataGridViewModel}">
+                            <DataTemplate DataType="{x:Type sharedvm:DataGridViewModel}">
                                 <view:DataGridView />
                             </DataTemplate>
                         </ContentControl.Resources>

@@ -78,16 +78,7 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Compile Include="Calculator.cs" />
-    <Compile Include="MenuItem.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="AddPersonCommand.cs" />
-    <Compile Include="ViewModel\ChildControl.cs" />
-    <Compile Include="ViewModel\DataGridViewModel.cs" />
-    <Compile Include="ViewModel\TreeViewViewModel.cs" />
-    <Compile Include="ViewModel\EmployeeManagementViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModelLocator.cs" />
     <Compile Include="Views\DataGridView.xaml.cs">
       <DependentUpon>DataGridView.xaml</DependentUpon>
     </Compile>
@@ -97,6 +88,7 @@
     <Compile Include="Views\TreeViewView.xaml.cs">
       <DependentUpon>TreeViewView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfPlatformServices.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -159,7 +151,10 @@
     <Resource Include="Resources\addLarge.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\menu.xml" />
+    <ProjectReference Include="..\Ch13.Shared\Ch13.Shared.csproj">
+      <Project>{635bc644-6376-4204-b2d7-6f8e8b69b2fc}</Project>
+      <Name>Ch13.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

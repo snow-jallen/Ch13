@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="StepDefinition1.cs" />
     <Compile Include="Test2.cs" />
+    <Compile Include="TestPlatformServices.cs" />
     <Compile Include="TotallyBogus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +99,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ch13.Shared\Ch13.Shared.csproj">
+      <Project>{635bc644-6376-4204-b2d7-6f8e8b69b2fc}</Project>
+      <Name>Ch13.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ch13\Ch13.csproj">
       <Project>{6daab6f3-d1fb-4fa4-919e-f37fd228b08d}</Project>
       <Name>Ch13</Name>

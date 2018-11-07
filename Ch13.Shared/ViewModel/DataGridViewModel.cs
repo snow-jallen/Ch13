@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Ch13.ViewModel
+namespace Ch13.Shared.ViewModel
 {
     public class DataGridViewModel : INotifyPropertyChanged
     {
         public DataGridViewModel()
         {
-            var xml = XDocument.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("Ch13.Resources.menu.xml"));
+            var xml = XDocument.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("Ch13.Shared.menu.xml"));
             Menu = from food in xml.Element("breakfast_menu").Elements("food")
                    select new MenuItem(
                        (string)food.Element("name"),

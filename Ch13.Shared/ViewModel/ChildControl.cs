@@ -1,4 +1,4 @@
-﻿namespace Ch13.ViewModel
+﻿namespace Ch13.Shared.ViewModel
 {
     public class ChildControl
     {

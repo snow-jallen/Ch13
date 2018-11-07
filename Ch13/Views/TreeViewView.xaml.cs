@@ -1,4 +1,6 @@
-﻿using Ch13.ViewModel;
+﻿using Ch13.Shared;
+using Ch13.Shared.ViewModel;
+using Ch13.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

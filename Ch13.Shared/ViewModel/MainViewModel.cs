@@ -1,4 +1,3 @@
-using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,13 +6,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace Ch13.ViewModel
+namespace Ch13.Shared.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public MainViewModel()
+        public MainViewModel(IPlatformServices platformServices)
         {
             ChildViewModels = new ObservableCollection<ChildControl>();
+            this.platformServices = platformServices ?? throw new ArgumentNullException(nameof(platformServices));
         }
 
         private ObservableCollection<ChildControl> childViewModels;
@@ -30,27 +30,29 @@ namespace Ch13.ViewModel
             set { SetField(ref selectedChildViewModel, value); }
         }
 
-        private RelayCommand addEmployeeManagement;
-        public RelayCommand AddEmployeeManagement => addEmployeeManagement ?? (addEmployeeManagement = new RelayCommand(
+        private ICommand addEmployeeManagement;
+        public ICommand AddEmployeeManagement => addEmployeeManagement ?? (addEmployeeManagement = platformServices.CreateCommand(
             () =>
             {
-                ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel()));
+                ChildViewModels.Add(new ChildControl("Emp Mgmt", new EmployeeManagementViewModel(platformServices)));
                 SelectedChildViewModel = ChildViewModels.Last();
             }));
 
-        private RelayCommand addTreeView;
-        public RelayCommand AddTreeView => addTreeView ?? (addTreeView = new RelayCommand(
+        private ICommand addTreeView;
+        public ICommand AddTreeView => addTreeView ?? (addTreeView = platformServices.CreateCommand(
             () =>
             {
                 var mostRecentEmployeeManagementViewModel = (EmployeeManagementViewModel)(ChildViewModels.FirstOrDefault(v => v.ViewModel.GetType() == typeof(EmployeeManagementViewModel))?.ViewModel);
-                var people = mostRecentEmployeeManagementViewModel?.People ?? new BindingList<Person>(new[] { new Person() { FirstName = "Bogus", LastName = "Person" } });
-                    
-                ChildViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people))));
+                var people = mostRecentEmployeeManagementViewModel?.People ?? new BindingList<Person>(new[] { new Person(platformServices) { FirstName = "Bogus", LastName = "Person" } });
+
+                ChildViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people), platformServices)));
                 SelectedChildViewModel = ChildViewModels.Last();
             }));
 
-        private RelayCommand addDataGrid;
-        public RelayCommand AddDataGrid => addDataGrid ?? (addDataGrid = new RelayCommand(
+        private ICommand addDataGrid;
+        private readonly IPlatformServices platformServices;
+
+        public ICommand AddDataGrid => addDataGrid ?? (addDataGrid = platformServices.CreateCommand(
             () =>
             {
                 ChildViewModels.Add(new ChildControl("Data Grid", new DataGridViewModel()));

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
 using FluentAssertions;
+using Ch13.Shared;
 
 namespace Ch13Tests
 {

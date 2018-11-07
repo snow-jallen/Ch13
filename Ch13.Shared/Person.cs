@@ -1,6 +1,4 @@
-﻿using Ch13.ViewModel;
-using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Messaging;
+﻿using Ch13.Shared.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,19 +7,19 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using TaskDialogInterop;
+using System.Windows.Input;
 
-namespace Ch13
+namespace Ch13.Shared
 {
     public class Person : INotifyPropertyChanged, IDataErrorInfo
     {
-        public Person() : this(firstName: null, lastName: null)
+        public Person(IPlatformServices platformServices) : this(platformServices, firstName: null, lastName: null)
         {
-
         }
 
-        public Person(string firstName=null, string lastName=null)
+        public Person(IPlatformServices platformServices, string firstName=null, string lastName=null)
         {
+            this.platformServices = platformServices ?? throw new ArgumentNullException(nameof(platformServices));
             FirstName = firstName;
             LastName = lastName;
             Children.CollectionChanged += (s, e) => OnPropertyChanged(nameof(Children));
@@ -159,20 +157,19 @@ namespace Ch13
             }
         }
 
-        private RelayCommand saveChanges;
-        public RelayCommand SaveChanges => saveChanges ?? (saveChanges = new RelayCommand(
+        private ICommand saveChanges;
+        public ICommand SaveChanges => saveChanges ?? (saveChanges = platformServices.CreateCommand(
             () =>
             {
-                Messenger.Default.Send("You saved it!");
-
-
                 var options = new TaskDialogOptions();
                 options.MainInstruction = "You clicked save!";
-                Messenger.Default.Send<TaskDialogOptions>(options);
+                platformServices.SendMessage(options);
             },
             () => errors.Count == 0 || errors.Values.Count(v => !String.IsNullOrWhiteSpace(v)) == 0));
 
         private Dictionary<string, string> errors = new Dictionary<string, string>();
+        private readonly IPlatformServices platformServices;
+
         public string Error => null;
         public string this[string columnName] => errors.ContainsKey(columnName) ? errors[columnName] : null;
 

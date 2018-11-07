@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Ch13.Shared.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,8 @@ namespace Ch13
         public MainWindow()
         {
             InitializeComponent();
+            var wpfPlatformServices = new WpfPlatformServices();
+            DataContext = new MainViewModel(wpfPlatformServices);
             Messenger.Default.Register<string>(this, (s) =>
             {
                 var options = new TaskDialogOptions

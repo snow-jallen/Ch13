@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,22 +9,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Ch13.ViewModel
+namespace Ch13.Shared.ViewModel
 {
     public enum ScheduleType { FullTime,PartTime,AsNeeded}
 
     public class EmployeeManagementViewModel : INotifyPropertyChanged
     {
-        public EmployeeManagementViewModel()
+        public EmployeeManagementViewModel(IPlatformServices platformServices)
         {
+            this.platformServices = platformServices ?? throw new ArgumentNullException(nameof(platformServices));
             People = new BindingList<Person>(new[]
 {
-                new Person{FirstName="Jim",LastName="Bob", Salary=123.45M, StartDate= new DateTime(2013, 1,02), MugshotPath="/Images/baby1.png"},
-                new Person{FirstName="Joe",LastName="Bob", Salary=223.45M, StartDate= new DateTime(2014, 2,12), MugshotPath="/Images/baby2.jpg"},
-                new Person{FirstName="Jack",LastName="Bob", Salary=323.45M, StartDate=new DateTime(2015, 3,22), MugshotPath="/Images/baby1.png"},
-                new Person{FirstName="Jill",LastName="Bob", Salary=423.45M, StartDate=new DateTime(2016, 4,03), MugshotPath="/Images/baby2.jpg"},
+                new Person(platformServices){FirstName="Jim",LastName="Bob", Salary=123.45M, StartDate= new DateTime(2013, 1,02), MugshotPath="/Images/baby1.png"},
+                new Person(platformServices){FirstName="Joe",LastName="Bob", Salary=223.45M, StartDate= new DateTime(2014, 2,12), MugshotPath="/Images/baby2.jpg"},
+                new Person(platformServices){FirstName="Jack",LastName="Bob", Salary=323.45M, StartDate=new DateTime(2015, 3,22), MugshotPath="/Images/baby1.png"},
+                new Person(platformServices){FirstName="Jill",LastName="Bob", Salary=423.45M, StartDate=new DateTime(2016, 4,03), MugshotPath="/Images/baby2.jpg"},
             }.ToList());
-            AddPerson = new AddPersonCommand(People);
+            AddPerson = new AddPersonCommand(People, platformServices);
             SelectedPerson = People.First();
         }
 
@@ -47,13 +47,16 @@ namespace Ch13.ViewModel
             set
             {
                 SetField(ref fileName, value);
-                SaveEmployeeList.RaiseCanExecuteChanged();
-                LoadEmployeeList.RaiseCanExecuteChanged();
+                //TODO: ICommand doesn't have a RaiseCanExecuteChanged()...will PropertyChanged work well enough?
+                //SaveEmployeeList.RaiseCanExecuteChanged();
+                //LoadEmployeeList.RaiseCanExecuteChanged();
+                OnPropertyChanged(nameof(SaveEmployeeList));
+                OnPropertyChanged(nameof(LoadEmployeeList));
             }
         }
 
-        private RelayCommand saveEmployeeList;
-        public RelayCommand SaveEmployeeList => saveEmployeeList ?? (saveEmployeeList = new RelayCommand(
+        private ICommand saveEmployeeList;
+        public ICommand SaveEmployeeList => saveEmployeeList ?? (saveEmployeeList = platformServices.CreateCommand(
             () =>
             {
                 var json = JsonConvert.SerializeObject(People, Formatting.Indented);
@@ -71,8 +74,10 @@ namespace Ch13.ViewModel
                 return Directory.Exists(folder);
             }));
 
-        private RelayCommand loadEmployeeList;
-        public RelayCommand LoadEmployeeList => loadEmployeeList ?? (loadEmployeeList = new RelayCommand(
+        private ICommand loadEmployeeList;
+        private readonly IPlatformServices platformServices;
+
+        public ICommand LoadEmployeeList => loadEmployeeList ?? (loadEmployeeList = platformServices.CreateCommand(
             () =>
             {
                 var json = File.ReadAllText(FileName);
