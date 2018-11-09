@@ -1,4 +1,5 @@
-﻿using Ooui;
+﻿using Ch13.Shared.ViewModel;
+using Ooui;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -10,7 +11,9 @@ namespace Ch13.Ooui
         static void Main(string[] args)
         {
             Forms.Init();
-            UI.Publish("/", new MainPage().GetOouiElement());
+            var platformServices = new OouiPlatformServices();
+            var vm = new MainViewModel(platformServices);
+            UI.Publish("/", new MainPage() { BindingContext = vm }.GetOouiElement());
 #if DEBUG
             UI.Port = 12345;
             UI.Host = "localhost";

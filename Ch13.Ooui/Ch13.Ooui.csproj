@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ch13.Shared\Ch13.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="EmployeeManagementPageMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
