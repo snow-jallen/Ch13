@@ -12,7 +12,7 @@ namespace Ch13.Ooui
         {
             Forms.Init();
             var platformServices = new OouiPlatformServices();
-            var vm = new MainViewModel(platformServices);
+            var vm = new EmployeeManagementViewModel(platformServices);
             UI.Publish("/", new MainPage() { BindingContext = vm }.GetOouiElement());
 #if DEBUG
             UI.Port = 12345;
