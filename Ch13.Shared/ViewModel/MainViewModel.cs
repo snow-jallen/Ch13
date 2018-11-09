@@ -43,7 +43,7 @@ namespace Ch13.Shared.ViewModel
             () =>
             {
                 var mostRecentEmployeeManagementViewModel = (EmployeeManagementViewModel)(ChildViewModels.FirstOrDefault(v => v.ViewModel.GetType() == typeof(EmployeeManagementViewModel))?.ViewModel);
-                var people = mostRecentEmployeeManagementViewModel?.People ?? new BindingList<Person>(new[] { new Person(platformServices) { FirstName = "Bogus", LastName = "Person" } });
+                var people = mostRecentEmployeeManagementViewModel?.People ?? new ObservableCollection<Person>(new[] { new Person(platformServices) { FirstName = "Bogus", LastName = "Person" } });
 
                 ChildViewModels.Add(new ChildControl("Tree View", new TreeViewViewModel(new ObservableCollection<Person>(people), platformServices)));
                 SelectedChildViewModel = ChildViewModels.Last();

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Ch13.Shared.ViewModel
         public EmployeeManagementViewModel(IPlatformServices platformServices)
         {
             this.platformServices = platformServices ?? throw new ArgumentNullException(nameof(platformServices));
-            People = new BindingList<Person>(new[]
+            People = new ObservableCollection<Person>(new[]
 {
                 new Person(platformServices){FirstName="Jim",LastName="Bob", Salary=123.45M, StartDate= new DateTime(2013, 1,02), MugshotPath="/Images/baby1.png"},
                 new Person(platformServices){FirstName="Joe",LastName="Bob", Salary=223.45M, StartDate= new DateTime(2014, 2,12), MugshotPath="/Images/baby2.jpg"},
@@ -29,7 +30,7 @@ namespace Ch13.Shared.ViewModel
             SelectedPerson = People.First();
         }
 
-        public BindingList<Person> People { get; set; }
+        public ObservableCollection<Person> People { get; set; }
 
         private Person selectedPerson;
         public Person SelectedPerson
@@ -82,7 +83,7 @@ namespace Ch13.Shared.ViewModel
             {
                 var json = File.ReadAllText(FileName);
                 var peopleFromJson = JsonConvert.DeserializeObject<IEnumerable<Person>>(json);
-                People = new BindingList<Person>(peopleFromJson.ToList());
+                People = new ObservableCollection<Person>(peopleFromJson.ToList());
                 OnPropertyChanged(nameof(People));
                 SelectedPerson = People.First();
             },

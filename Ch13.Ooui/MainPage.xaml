@@ -2,15 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Ch13.Ooui.MainPage">
-    <StackLayout>
-        <Label Text="Value before listview" />
-        <ListView ItemsSource="{Binding People}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Text="Click on a person below:"
+               FontAttributes="Bold"
+               FontSize="Large"/>
+        <ListView ItemsSource="{Binding People}"
+                  SelectedItem="{Binding SelectedPerson}"
+                  Grid.Row="1"
+                  HeightRequest="150"
+                  BackgroundColor="Transparent">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label Text="Value after listview" />
-    </StackLayout>
+        <StackLayout Grid.Row="2">
+            <Button Command="{Binding AddPerson}"
+                    Text="Add New Person" />
+        </StackLayout>
+
+
+
+        <StackLayout Grid.Column="1"
+                     Grid.RowSpan="5"
+                     BindingContext="{Binding SelectedPerson}">
+            <Label Text="Selected Person's Details:" />
+            <Label Text="{Binding Name}" />
+            <Label Text="Start Date (no StringFormat available...so it's ugly)" />
+            <Label Text="{Binding StartDate}" />
+            <Label Text="Salary (again...no StringFormat available)" />
+            <Label Text="{Binding Salary}" />
+        </StackLayout>
+    </Grid>
 </ContentPage>

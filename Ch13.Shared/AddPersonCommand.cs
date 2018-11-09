@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -6,10 +7,10 @@ namespace Ch13.Shared.ViewModel
 {
     public class AddPersonCommand : ICommand
     {
-        private BindingList<Person> people;
+        private ObservableCollection<Person> people;
         private readonly IPlatformServices platformServices;
 
-        public AddPersonCommand(BindingList<Person> people, IPlatformServices platformServices)
+        public AddPersonCommand(ObservableCollection<Person> people, IPlatformServices platformServices)
         {
             this.people = people;
             this.platformServices = platformServices ?? throw new ArgumentNullException(nameof(platformServices));
